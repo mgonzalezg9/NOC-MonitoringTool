@@ -12,8 +12,8 @@ export class CheckService implements CheckServiceUseCase {
 
     constructor(
         private readonly logRepository: LogRepository,
-        private readonly successCallback: SuccessCallback,
-        private readonly errorCallback: ErrorCallback
+        private readonly successCallback?: SuccessCallback,
+        private readonly errorCallback?: ErrorCallback
     ) {
     }
 
@@ -28,7 +28,7 @@ export class CheckService implements CheckServiceUseCase {
             const log = new LogEntity(`Service ${url} working`, LogSeverityLevel.LOW)
             this.logRepository.saveLog(log)
 
-            this.successCallback();
+            this.successCallback && this.successCallback();
             return true;
         } catch (error) {
             const errorMessage = `${url} is DOWN. ${error}`;
@@ -36,7 +36,7 @@ export class CheckService implements CheckServiceUseCase {
             const log = new LogEntity(errorMessage, LogSeverityLevel.HIGH)
             this.logRepository.saveLog(log);
 
-            this.errorCallback(errorMessage);
+            this.errorCallback && this.errorCallback(errorMessage);
             return false
         }
     }
