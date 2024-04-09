@@ -1,5 +1,10 @@
-import { MAILER_EMAIL, MAILER_SECRET_KEY, MAILER_SERVICE } from '@/config/plugins/envs.plugin';
 import nodemailer from 'nodemailer';
+
+interface EmailServiceOptions {
+    service: string;
+    user: string;
+    pass: string;
+}
 
 interface SendMailOptions {
     to: string | string[];
@@ -14,15 +19,21 @@ interface Attachment {
 }
 
 export class EmailService {
-    private transporter = nodemailer.createTransport({
-        service: MAILER_SERVICE,
-        auth: {
-            user: MAILER_EMAIL,
-            pass: MAILER_SECRET_KEY,
-        }
-    })
+    private transporter: nodemailer.Transporter;
 
-    constructor() { }
+    constructor({
+        service,
+        user,
+        pass
+    }: EmailServiceOptions) {
+        this.transporter = nodemailer.createTransport({
+            service,
+            auth: {
+                user,
+                pass
+            }
+        })
+    }
 
     async sendEmail({ to, subject, body, attachments }: SendMailOptions): Promise<boolean> {
         try {
