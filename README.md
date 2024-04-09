@@ -1,13 +1,25 @@
 # NOC - Monitoring Tool
 
 - [NOC - Monitoring Tool](#noc---monitoring-tool)
-  - [Introduction](#introduction)
+  - [Installation](#installation)
   - [Resources](#resources)
     - [Course](#course)
     - [Gists](#gists)
 
 
-## Introduction
+## Installation
+Create a [.env](.env) file using the contents of [.env.template](.env.template) as a template.
+
+Install all the node modules:
+
+```bash
+npm install
+```
+
+Run in development:
+```bash
+npm run dev
+```
 
 ## Resources
 
