@@ -7,7 +7,12 @@ export class Server {
 
         CronService.createJob('*/5 * * * * *',
             () => {
-                new CheckService().execute('https://google.com')
+                const url = 'https://google.com';
+
+                new CheckService(
+                    () => console.log(`${url} is OK`),
+                    (error) => console.log(error)
+                ).execute(url)
             }
         );
     }
